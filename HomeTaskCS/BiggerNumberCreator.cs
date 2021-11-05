@@ -14,7 +14,6 @@ namespace HomeTaskCS
             var current_digit_order = 0;
             while (number_copy / 10 != 0)
             {
-                number_copy = (int)(number / Math.Pow(10, current_digit_order));
                 var current_digit = number_copy % 10;
                 var previous_digit_order = current_digit_order + 1;
                 while (number_copy / 10 != 0) 
@@ -31,7 +30,8 @@ namespace HomeTaskCS
 
                 } 
                 current_digit_order++;
-                
+                number_copy = (int)(number / Math.Pow(10, current_digit_order));
+
             }
             
             return -1;
@@ -52,6 +52,7 @@ namespace HomeTaskCS
         [TestCase(123456, 123465)]
         [TestCase(19992, 29991)]
         [TestCase(99909991, 99919990)]
+        [TestCase(1350, 1530)]
         public void TestChangedNumber(int value, int expected)
         {
             var result = GetNextBiggerNumber(value);
