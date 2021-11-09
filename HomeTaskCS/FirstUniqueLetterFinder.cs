@@ -27,11 +27,7 @@ namespace HomeTaskCS
                 new List<char>(lower_str).GroupBy(c => c).Where(c => c.Count() > 1).Select(c => c.Key);
             // Get a list of unique characters (ignoring the case)
             var unique = characters.Except(repetitive_characters, new LetterEqualityComparer());
-            var unique_list = unique.ToList();
-            if (unique_list.Count > 0)
-                return unique_list[0];
-            return default;
-
+            return unique.FirstOrDefault();
         }
         [TestCase("sTreSS", 'T')]
         [TestCase("stress", 't')]
