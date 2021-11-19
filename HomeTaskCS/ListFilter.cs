@@ -9,7 +9,7 @@ namespace HomeTaskCS
     public class ListFilter
     {
         public List<int> GetIntegersFromList(List<object> initial_list) =>
-            initial_list.Where(ob => ob.GetType().Equals(typeof(int))).Select(ob => (int)ob).ToList<int>();
+            initial_list.Where(ob => ob is int).Select(ob => (int)ob).ToList<int>();
         [Test]
         public void Test1()
         {
