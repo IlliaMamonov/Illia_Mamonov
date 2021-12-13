@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\laba12345678\OrangeHRM\OrangeHRM.csproj" />
+    <ProjectReference Include="..\OrangeHRM\OrangeHRM.csproj" />
   </ItemGroup>
 
 </Project>
