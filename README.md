@@ -1,5 +1,5 @@
 # Illia_Mamonov 
 
 ---
-run <dotnet test> to start a test scenario
+run "dotnet test" to start a test scenario
 ---
