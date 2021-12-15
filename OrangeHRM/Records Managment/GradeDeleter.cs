@@ -10,6 +10,7 @@ namespace OrangeHRM.Records_Managment
         private readonly IWebDriver _driver;
         private readonly RecordFinder _finder;
         private readonly By _ok = By.Id("dialogDeleteBtn");
+        private By _checkbox;
 
         public GradeDeleter(IWebDriver webDriver)
         {
@@ -21,16 +22,9 @@ namespace OrangeHRM.Records_Managment
 
         public void RemoveRecord(string gradeName = "IlliaMamonov")
         {
-            //_driver.NavigateToPayGrades();
+            var currentRecord = _finder.Find(gradeName);
 
-            var gradeElement = _finder.Find(gradeName);
-
-            if (gradeName == null)
-            {
-                return;
-            }
-
-            gradeElement.Click();
+            currentRecord.Click();
             Thread.Sleep(1000);
             var currentUrl = _driver.Url;
 
@@ -42,7 +36,8 @@ namespace OrangeHRM.Records_Managment
                 id += match.Value;
             }
             _driver.NavigateToPayGrades();
-            IWebElement checkBox = _driver.FindElement(By.Id("ohrmList_chkSelectRecord_" + id));
+            _checkbox = By.Id("ohrmList_chkSelectRecord_" + id);
+            IWebElement checkBox = _driver.FindElement(_checkbox);
             checkBox.Click();
             _driver.FindElement(_delete).Click();
             Thread.Sleep(2000);

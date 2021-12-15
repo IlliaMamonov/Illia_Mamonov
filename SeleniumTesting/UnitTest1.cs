@@ -43,38 +43,37 @@ namespace SeleniumTesting
             var name = "IlliaMamonov";
             _driver.Navigate().GoToUrl(_url);
             _authorizer.SignIn(_userName, _password);
-            _driver.NavigateToPayGrades();
-
             try
             {
-                _recordAdder.AddNewRecord(name);
-                _currencyAssigner.Assign(100m, 10000m);
+                _driver.NavigateToPayGrades();
             }
             catch (NoSuchElementException)
+            {
+                Assert.Fail("Signing in was not successful");
+            }
+            record = recordFinder.Find(name);
+            if (record != null)
             {
                 Assert.Fail("This record already exists");
             }
 
+            _recordAdder.AddNewRecord(name);
+            _currencyAssigner.Assign(100m, 10000m);
+
             _driver.NavigateToPayGrades();
 
-            try
-            {
-                record = recordFinder.Find(name);
-            }
-            catch (NoSuchElementException)
+            record = recordFinder.Find(name);
+
+            if (record == null)
             {
                 Assert.Fail("Record was not created");
             }
 
-            // _driver.NavigateToPayGrades();
-
             _gradeDeleter.RemoveRecord(name);
 
-            try
-            {
-                record = recordFinder.Find(name);
-            }
-            catch (NoSuchElementException)
+            record = recordFinder.Find(name);
+
+            if (record == null)
             {
                 Assert.Pass();
             }

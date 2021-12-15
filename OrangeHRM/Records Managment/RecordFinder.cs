@@ -10,7 +10,19 @@ namespace OrangeHRM.Records_Managment
 
         public IWebDriver Driver => _driver;
 
-        public IWebElement Find(string gradeName) =>
-                    _driver.FindElement(By.XPath($"//*[contains(text(), '{gradeName}')]"));
+        public IWebElement Find(string gradeName)
+        {
+            IWebElement element;
+            try
+            {
+                element = _driver.FindElement(By.XPath($"//*[contains(text(), '{gradeName}')]"));
+            }
+            catch (NoSuchElementException)
+            {
+                element = null;
+            }
+
+            return element;
+        }
     }
 }
