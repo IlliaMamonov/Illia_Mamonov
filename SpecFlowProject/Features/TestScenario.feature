@@ -13,8 +13,8 @@ Scenario: 1 Sign in to the OrangeHRM
 Scenario: 2 Adding a new record to Pay Grades Page
 	Given the name of the record to be created is IlliaMamonov
 	And the minimum salary is 100 and the maximum salary is 5000
-	When the record is being looked for
-	Then the record should be found
+	When the record is created
+	Then the record should appear on the Pay Grades Page
 
 
 

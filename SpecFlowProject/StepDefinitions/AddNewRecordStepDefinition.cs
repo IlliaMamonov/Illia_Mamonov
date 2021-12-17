@@ -13,6 +13,8 @@ namespace SpecFlow.Specs.StepDefinitions
         private DashBoardPage _dashBoardPage;
         private GradeAdderPage _gradeAdderPage;
         private string _name;
+        private decimal _minSalary;
+        private decimal _maxSalary;
         private IWebElement _newRecord;
         private PayGradesPage _payGradesPage;
 
@@ -25,27 +27,29 @@ namespace SpecFlow.Specs.StepDefinitions
         public void GivenTheGradeNameIs(string name)
         {
             _name = name;
-            _payGradesPage = _dashBoardPage.RedirectToPayGradesPage();
-            _gradeAdderPage = _payGradesPage.ClickAddButton();
-            _currentGradePage = _gradeAdderPage.AddNewGrade(_name);
         }
 
         [Given("the minimum salary is (.*) and the maximum salary is (.*)")]
         public void GivenTheSalaryInfoIs(decimal minSalary, decimal maxSalary)
         {
-            _currentGradePage.AssignCurrency(minSalary, maxSalary);
+            _minSalary = minSalary;
+            _maxSalary = maxSalary;
         }
 
-        [When("the record is being looked for")]
-        public void WhenRecordIsLookedFor()
+        [When("the record is created")]
+        public void WhenRecordIsCreated()
+        {
+            _payGradesPage = _dashBoardPage.RedirectToPayGradesPage();
+            _gradeAdderPage = _payGradesPage.ClickAddButton();
+            _currentGradePage = _gradeAdderPage.AddNewGrade(_name);
+            _currentGradePage.AssignCurrency(_minSalary, _maxSalary);
+        }
+
+        [Then("the record should appear on the Pay Grades Page")]
+        public void ThenTheResultShouldBe()
         {
             _payGradesPage = _currentGradePage.RedirectToPayGradesPage();
             _newRecord = _payGradesPage.FindRecord(_name);
-        }
-
-        [Then("the record should be found")]
-        public void ThenTheResultShouldBe()
-        {
             if (_newRecord == null)
             {
                 Assert.Fail("The record could not be created");
