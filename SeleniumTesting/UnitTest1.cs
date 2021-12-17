@@ -1,20 +1,23 @@
+using NUnit.Allure.Attributes;
+using NUnit.Allure.Core;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OrangeHRM;
 using OrangeHRM.Authorization;
-using OrangeHRM.Records_Managment;
+using OrangeHRM.Pages;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace SeleniumTesting
 {
     [TestFixture]
+    [AllureNUnit]
+    [AllureSuite("OrangeHRM Tests")]
     public sealed class OtangeHRMTests
     {
         private IWebDriver _driver;
-        private IWebSiteAuthorizer _authorizer;
-        private IRecordAdder _recordAdder;
-        private CurrencyAssigner _currencyAssigner;
-        private GradeDeleter _gradeDeleter;
         private readonly string _url = "https://opensource-demo.orangehrmlive.com/";
         private readonly string _userName = "Admin";
         private readonly string _password = "admin123";
@@ -22,11 +25,9 @@ namespace SeleniumTesting
         [OneTimeSetUp]
         public void Setup()
         {
+            Environment.CurrentDirectory = Path.GetDirectoryName(GetType().Assembly.Location);
             _driver = new ChromeDriver();
-            _authorizer = new OrangeHRMAuthorizer(_driver);
-            _recordAdder = new GradeAdder(_driver);
-            _currencyAssigner = new CurrencyAssigner(_driver);
-            _gradeDeleter = new GradeDeleter(_driver);
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
         [OneTimeTearDown]
@@ -36,49 +37,46 @@ namespace SeleniumTesting
         }
 
         [Test]
+        [AllureOwner("IlliaMamonov")]
         public void TestScenario()
         {
+            
+            int gradeId;
             IWebElement record;
-            var recordFinder = new RecordFinder(_driver);
             var name = "IlliaMamonov";
             _driver.Navigate().GoToUrl(_url);
-            _authorizer.SignIn(_userName, _password);
-            try
-            {
-                _driver.NavigateToPayGrades();
-            }
-            catch (NoSuchElementException)
+            SignInPage signInPage = new SignInPage(_driver);
+            DashBoardPage dashBoardPage = signInPage.SignIn(_userName, _password);
+            IWebElement welcomeText = _driver.FindElements(By.Id("welcome")).FirstOrDefault();
+
+            if (welcomeText == null)
             {
                 Assert.Fail("Signing in was not successful");
             }
-            record = recordFinder.Find(name);
+
+            PayGradesPage payGradesPage = dashBoardPage.RedirectToPayGradesPage();
+            GradeAdderPage gradeAdder = payGradesPage.ClickAddButton();
+            CurrentGradePage newGradePage = gradeAdder.AddNewGrade(name);
+            newGradePage.AssignCurrency(100m, 5000m);
+            gradeId = newGradePage.ID;
+            payGradesPage = newGradePage.RedirectToPayGradesPage();
+            record = payGradesPage.FindRecord(name);
+
+            if (record == null)
+            {
+                Assert.Fail("A record could not be created");
+            }
+
+            payGradesPage.DeleteRecord(gradeId);
+
+            record = payGradesPage.FindRecord(name);
+
             if (record != null)
             {
-                Assert.Fail("This record already exists");
+                Assert.Fail("A record could not be deleted");
             }
 
-            _recordAdder.AddNewRecord(name);
-            _currencyAssigner.Assign(100m, 10000m);
-
-            _driver.NavigateToPayGrades();
-
-            record = recordFinder.Find(name);
-
-            if (record == null)
-            {
-                Assert.Fail("Record was not created");
-            }
-
-            _gradeDeleter.RemoveRecord(name);
-
-            record = recordFinder.Find(name);
-
-            if (record == null)
-            {
-                Assert.Pass();
-            }
-
-            Assert.Fail("Record was not deleted");
+            Assert.Pass();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-using System.Threading;
+using OrangeHRM.Pages;
 
 namespace OrangeHRM
 {
@@ -9,14 +9,15 @@ namespace OrangeHRM
         private static readonly By _job = By.Id("menu_admin_Job");
         private static readonly By _payGrades = By.Id("menu_admin_viewPayGrades");
 
-        public static void NavigateToPayGrades(this IWebDriver webDriver)
+        public static PayGradesPage RedirectToPayGrades(this IWebDriver webDriver)
         {
             webDriver.FindElement(_admin).Click();
-            Thread.Sleep(1000);
+            
             webDriver.FindElement(_job).Click();
-            Thread.Sleep(1000);
+           
             webDriver.FindElement(_payGrades).Click();
-            Thread.Sleep(1000);
+            
+            return new PayGradesPage(webDriver);
         }
     }
 }
