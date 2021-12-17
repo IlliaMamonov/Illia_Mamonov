@@ -11,4 +11,8 @@ run the following to start a test scenario:
 * dotnet build
 * dotnet test
 
+run the following to see the report
+
+* allure serve SpecFlowProject\bin\Debug\netcoreapp3.1\allure-results
+
 ---
