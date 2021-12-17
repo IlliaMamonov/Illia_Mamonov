@@ -30,7 +30,7 @@ namespace OrangeHRM.Pages
                     idString += match.Value;
                 }
                 int.TryParse(idString, out var id);
-
+                _id = id;
                 return id;
             }
         }
