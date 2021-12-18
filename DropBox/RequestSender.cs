@@ -4,7 +4,7 @@ namespace DropBox
 {
     public abstract class RequestSender
     {
-        protected static readonly string _token = "Bearer sl.A-YIHcBY83n552CM8H4aIhwuoj3k9_otp6ur-37SFSyMDJ3VfwqMCdE2gLjTZ5AgJi3XxyAvZsY-U5PSGPKgRQTk6ztqJEmxDelrwOFCLxTdKjHN8b0U_b2-s-EG2AII7xLomOfSV00";
+        protected static readonly string _token = "Bearer sl.A-ZPkpHsTJfpYMFmhUPxIxCkx4mLkY2Jm6c2ZVbp5dQBBU1KQ2vD4Ak6_YoA-xcm_gMuygOqJFgRBHW-G2x3jLGjTzWH7eTsMjRMzob67EEK98CufbZJVkmBOhLIveI7OSij7-EXEGg";
         protected IRestClient _client;
         protected IRestRequest _request;
         protected IRestResponse _response;
