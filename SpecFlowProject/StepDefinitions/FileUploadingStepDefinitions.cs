@@ -8,9 +8,9 @@ namespace SpecFlowProject.StepDefinitions
     [Binding]
     public sealed class FileUploadingStepDefinitions
     {
-        private FileUloader _uploader;
+        private FileUploader _uploader;
 
-        public FileUploadingStepDefinitions() => _uploader = new FileUloader();
+        public FileUploadingStepDefinitions() => _uploader = new FileUploader();
 
         [Given("the file is to be uploaded"), Scope(Scenario = "1 Upload a file")]
         public void GivenTheFile()

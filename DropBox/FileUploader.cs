@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DropBox
 {
-    public sealed class FileUloader : RequestSender
+    public sealed class FileUploader : RequestSender
     {
         private readonly Dictionary<string, string> _headers = new Dictionary<string, string>()
         {
@@ -14,7 +14,7 @@ namespace DropBox
 
         private readonly string _url = "https://content.dropboxapi.com/2/files/upload";
 
-        public FileUloader() : base() => _client = new RestClient(_url);
+        public FileUploader() : base() => _client = new RestClient(_url);
 
         public override void BuildRequest()
         {
