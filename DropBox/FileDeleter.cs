@@ -22,11 +22,7 @@ namespace DropBox
 
         public override void BuildRequest()
         {
-            foreach (var header in _headers)
-            {
-                _request.AddHeader(header.Key, header.Value);
-            }
-
+            _request.AddHeaders(_headers);
             _request.AddJsonBody(_body);
         }
 

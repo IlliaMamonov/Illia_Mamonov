@@ -22,15 +22,8 @@ namespace DropBox
 
         public override void BuildRequest()
         {
-            foreach (var header in _headers)
-            {
-                _request.AddHeader(header.Key, header.Value);
-            }
-
-            foreach (var body in _body)
-            {
-                _request.AddJsonBody(_body);
-            }
+            _request.AddHeaders(_headers);
+            _request.AddJsonBody(_body);
         }
 
         public void GetMetaData()
