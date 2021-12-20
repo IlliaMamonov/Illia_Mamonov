@@ -1,0 +1,22 @@
+﻿[
+  {
+    ".tag": "folder",
+    "name": "MyFolder",
+    "path_lower": "/myfolder",
+    "path_display": "/MyFolder",
+    "id": "id:JJDhY8BvWC4AAAAAAAAAFQ"
+  },
+  {
+    ".tag": "file",
+    "name": "IlliaMamonov.txt",
+    "path_lower": "/illiamamonov.txt",
+    "path_display": "/IlliaMamonov.txt",
+    "id": "id:JJDhY8BvWC4AAAAAAAAAGA",
+    "client_modified": "2021-12-20T11:13:17Z",
+    "server_modified": "2021-12-20T11:13:17Z",
+    "rev": "015d391f9bf6afa0000000254d88860",
+    "size": 0,
+    "is_downloadable": true,
+    "content_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

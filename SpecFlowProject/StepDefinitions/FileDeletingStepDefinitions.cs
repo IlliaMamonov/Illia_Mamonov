@@ -1,4 +1,5 @@
 ﻿using DropBox;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,13 @@ namespace SpecFlowProject.StepDefinitions
     {
         private FileDeleter _deleter;
 
-        public FileDeletingStepDefinitions() => _deleter = new FileDeleter();
+        private readonly FolderContentReceiver _contentReceiver;
+
+        public FileDeletingStepDefinitions()
+        {
+            _deleter = new FileDeleter();
+            _contentReceiver = new FolderContentReceiver();
+        }
 
         [Given("the file to be deleted"), Scope(Scenario = "3 Delete the file")]
         public void GivenTheFileToBeDeleted()
@@ -31,10 +38,9 @@ namespace SpecFlowProject.StepDefinitions
         public void ThenTheResponseShouldBeOk()
         {
             var responseStatusCode = _deleter.Response.StatusCode;
-            if (responseStatusCode != HttpStatusCode.OK)
-            {
-                Assert.Fail("Unable to delete the file");
-            }
+            IEnumerable<string> files = _contentReceiver.GetFiles();
+            responseStatusCode.Should().Be(HttpStatusCode.OK);
+            files.Should().NotContain(RequestSender.FileName);
         }
     }
 }

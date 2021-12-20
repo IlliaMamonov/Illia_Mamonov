@@ -7,7 +7,7 @@ namespace DropBox
     {
         private readonly Dictionary<string, string> _body = new Dictionary<string, string>()
         {
-            {"path", "/IlliaMamonov.txt"}
+            {"path", $"/{s_fileName}"}
         };
 
         private readonly Dictionary<string, string> _headers = new Dictionary<string, string>()

@@ -1,9 +1,6 @@
 ﻿using DropBox;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using TechTalk.SpecFlow;
 
 namespace SpecFlowProject.StepDefinitions
@@ -33,7 +30,7 @@ namespace SpecFlowProject.StepDefinitions
             var responseStatusCode = _receiver.Response.StatusCode;
             if (responseStatusCode != HttpStatusCode.OK)
             {
-                Assert.Fail("Unable to get the file meat data");
+                Assert.Fail("Unable to get the file meta data");
             }
         }
     }
